@@ -1,0 +1,5 @@
+dataset/*.*
+dataset/archive/
+dataset/fish_data_houghline/*.*
+dataset/fish_data_lbp/*.*
+dataset/fish_data_hog/*.*
