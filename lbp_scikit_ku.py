@@ -13,12 +13,12 @@ import csv
 from alive_progress import alive_bar
 
 DATASET_PATH='dataset/archive/Fish_Data/images/cropped'
-METHODS = ['default', 'ror','uniform','nri_uniform','var']
+METHODS = ['default'] #'ror','uniform','nri_uniform','var'
 DATA_LBP_PATH = 'dataset/fish_data_lbp/resize/'
-RADIUS_LBP = 2
+RADIUS_LBP = 5
 N_POINTS_LBP = 8 * RADIUS_LBP
 idx=0
-with alive_bar(4415) as bar:
+with alive_bar(4412) as bar:
     for item in list(glob.glob(DATASET_PATH+'/*.*')):
         idx+=1
         filename = item.split('\\')[-1]
@@ -32,7 +32,7 @@ with alive_bar(4415) as bar:
             temp = local_binary_pattern(img, N_POINTS_LBP, RADIUS_LBP, m)
             elapsed_time = time.time() - start_time    
             hist = np.histogram(temp, density=True, bins=256, range=(0, 256))
-            f = open(DATA_LBP_PATH+'/'+m+'/'+m+'_dense'+'_radius_is_2.csv', 'a+', newline='', encoding='utf-8')
+            f = open(DATA_LBP_PATH+'/'+m+'/'+m+'_dense'+'_radius_is_5.csv', 'a+', newline='', encoding='utf-8')
             writer = csv.writer(f)
             h = list(hist[0])
             h.insert(0,elapsed_time)
@@ -42,15 +42,15 @@ with alive_bar(4415) as bar:
             # id, class, varian, time, ...lbp hist
             writer.writerow(h)
             f.close()
-            hist = np.histogram(temp, density=False, bins=256, range=(0, 256))
-            f = open(DATA_LBP_PATH+'/'+m+'/'+m+''+'_radius_is_2.csv', 'a+', newline='', encoding='utf-8')
-            writer = csv.writer(f)
-            h = list(hist[0])
-            h.insert(0,elapsed_time)
-            h.insert(0,varian)
-            h.insert(0,class_name)
-            h.insert(0,idx)
-            # id, class, varian, time, ...lbp hist
-            writer.writerow(h)
-            f.close()
+            # hist = np.histogram(temp, density=False, bins=256, range=(0, 256))
+            # f = open(DATA_LBP_PATH+'/'+m+'/'+m+''+'_radius_is_2.csv', 'a+', newline='', encoding='utf-8')
+            # writer = csv.writer(f)
+            # h = list(hist[0])
+            # h.insert(0,elapsed_time)
+            # h.insert(0,varian)
+            # h.insert(0,class_name)
+            # h.insert(0,idx)
+            # # id, class, varian, time, ...lbp hist
+            # writer.writerow(h)
+            # f.close()
         bar()
