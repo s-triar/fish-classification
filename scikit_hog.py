@@ -35,32 +35,26 @@ with alive_bar(4415) as bar:
         img = cv2.imread(item, cv2.IMREAD_GRAYSCALE)
         img = cv2.resize(img,(280,280))
         
-        # start_time   = time.time()    
-        # fd = hog(img, orientations=9, pixels_per_cell=(12, 12),
-        #             cells_per_block=(1, 1), visualize=False)
-        # elapsed_time = time.time() - start_time    
-        # f = open(DATA_HOG_PATH+'/'+'hog_fish.csv', 'a+', newline='', encoding='utf-8')
-        # writer = csv.writer(f)
-        # h = list(fd)
-        # h.insert(0,elapsed_time)
-        # h.insert(0,varian)
-        # h.insert(0,class_name)
-        # h.insert(0,idx)
-        # # id, class, varian, time, ...hog fts
-        # writer.writerow(h)
-        # f.close()
-        
-        tested_angles = np.linspace(-np.pi / 2, np.pi / 2, 360, endpoint=False)
-        edges1 = canny(img)
         start_time   = time.time()    
-        h, theta, d = hough_line(edges1, theta=tested_angles)
-        elapsed_time = time.time() - start_time   
+        fd = hog(img, orientations=9, pixels_per_cell=(12, 12),
+                    cells_per_block=(1, 1), visualize=False)
+        elapsed_time = time.time() - start_time    
+        f = open(DATA_HOG_PATH+'/'+'hog_fish.csv', 'a+', newline='', encoding='utf-8')
+        writer = csv.writer(f)
+        h = list(fd)
+        h.insert(0,elapsed_time)
+        h.insert(0,varian)
+        h.insert(0,class_name)
+        h.insert(0,idx)
+        # id, class, varian, time, ...hog fts
+        writer.writerow(h)
+        f.close()
         
-        for i in h:
-            print(i)
-        print(h.shape)
-        # print(theta)
-        # print(d) 
+        # tested_angles = np.linspace(-np.pi / 2, np.pi / 2, 360, endpoint=False)
+        # edges1 = canny(img)
+        # start_time   = time.time()    
+        # h, theta, d = hough_line(edges1, theta=tested_angles)
+        # elapsed_time = time.time() - start_time    
         # f = open(DATA_HL_PATH+'/'+'houghline_fish.csv', 'a+', newline='', encoding='utf-8')
         # writer = csv.writer(f)
         # fd = np.concatenate((theta,d),axis=None)
@@ -74,4 +68,3 @@ with alive_bar(4415) as bar:
         # f.close()
         
         bar()
-        break
